@@ -1,0 +1,71 @@
+.home {
+	min-height: 100vh;
+	position: relative;
+	color: var(--color-white);
+	background-image: url('/bg-nv.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+.home::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		180deg,
+		rgba(0, 0, 0, 0.75) 0%,
+		rgba(0, 0, 0, 0.45) 45%,
+		rgba(0, 0, 0, 0.08) 100%
+	);
+	z-index: 1;
+}
+
+.home > * {
+	position: relative;
+	z-index: 2;
+}
+
+.home__hero {
+	padding: 140px 0 120px;
+}
+
+.home__hero-inner {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 48px;
+}
+
+.home__title {
+	font-family: var(--font-family-accent);
+	font-size: 5.5rem;
+	text-transform: uppercase;
+	margin: 0;
+	display: flex;
+	align-items: baseline;
+	gap: 16px;
+}
+
+.home__title-accent {
+	font-family: var(--font-family-title);
+	font-size: 1.5rem;
+	letter-spacing: 0.15em;
+	opacity: 0.9;
+}
+
+.home__bar {
+	width: 320px;
+	height: 10px;
+	background: var(--color-primary);
+	margin-top: 18px;
+}
+
+.home__subtitle {
+	margin-top: 22px;
+	max-width: 520px;
+	font-family: var(--font-family-sans);
+	font-size: 1.05rem;
+	line-height: 1.7;
+	color: var(--color-gray-200);
+}
