@@ -27,3 +27,6 @@ Libreria UI compartida [navium-ui-lib](https://github.com/fabetabilo/navium-ui-l
 ```
 npm install navium-ui-lib
 ```
+```
+npm install axios
+```
