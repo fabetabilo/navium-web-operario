@@ -52,3 +52,24 @@
 	margin-left: 12px;
     font-size: var(--font-size-sm);
 }
+
+.navbar__user {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-left: 12px;
+}
+
+.navbar__user-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--color-gray-300);
+	font-size: 1.1rem;
+}
+
+.navbar__user-name {
+	font-family: var(--font-family-sans);
+	font-size: var(--font-size-sm);
+	color: var(--color-gray-300);
+}
