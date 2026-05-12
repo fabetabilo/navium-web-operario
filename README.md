@@ -19,6 +19,9 @@ npm install
 ```
 npm install react-router-dom
 ```
+```
+npm install react-icons
+```
 
 Libreria UI compartida [navium-ui-lib](https://github.com/fabetabilo/navium-ui-lib.git) (v2.0.0)
 ```

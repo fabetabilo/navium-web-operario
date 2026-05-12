@@ -2,7 +2,7 @@ import { Button } from 'navium-ui-lib';
 import logo from '../../assets/navium-v1.png';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ onLoginClick }) {
 	return (
 		<header className="navbar">
 			<div className="navbar__inner">
@@ -14,7 +14,14 @@ function Navbar() {
 					<a href="#nosotros">Nosotros</a>
 					<a href="#clientes">Clientes</a>
 					<a href="#contacto">Contacto</a>
-					<Button className="navbar__button" size="sm" variant="primary">Iniciar Sesión</Button>
+					<Button
+						className="navbar__button"
+						size="sm"
+						variant="primary"
+						onClick={onLoginClick}
+					>
+						Iniciar Sesión
+					</Button>
 				</nav>
 			</div>
 		</header>
