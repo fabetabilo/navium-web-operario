@@ -1,3 +1,5 @@
+![Diagram](docs/navium-banner-operario.png)
+
 # Navium | Vista de usuario Operario de Patio
 
 ### Requisitos
@@ -30,3 +32,10 @@ npm install navium-ui-lib
 ```
 npm install axios
 ```
+
+### Componentes esenciales
+
+- `AuthProvider` y `useAuth`: estado global de autenticacion (token, email, login modal).
+- `Login`: modal de ingreso y control de errores de autenticacion.
+- `ProtectedRoute`: restringe rutas privadas
+- `Navbar`: muestra acciones de login o el usuario autenticado + cierre de sesion.

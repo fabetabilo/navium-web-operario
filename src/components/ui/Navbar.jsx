@@ -1,27 +1,58 @@
 import { Button } from 'navium-ui-lib';
+import { Link } from 'react-router-dom';
+import { FiUser } from 'react-icons/fi';
 import logo from '../../assets/navium-v1.png';
+import { useAuth } from '../../context/AuthContext';
 import './Navbar.css';
 
-function Navbar({ onLoginClick }) {
+function Navbar() {
+	const { isAuthenticated, openLogin, logout, userEmail } = useAuth();
+	const displayName = userEmail ? userEmail.split('@')[0] : '';
+
+	const handleDashboardClick = (event) => {
+		if (!isAuthenticated) {
+			event.preventDefault();
+			openLogin();
+		}
+	};
+
 	return (
 		<header className="navbar">
 			<div className="navbar__inner">
-				<a className="navbar__brand" href="#home" aria-label="Navium">
+				<Link className="navbar__brand" to="/" aria-label="Navium">
 					<img src={logo} alt="Navium" />
-				</a>
+				</Link>
 				<nav className="navbar__links" aria-label="Primary">
-					<a href="#servicios">Servicios</a>
+					<Link to="/dashboard" onClick={handleDashboardClick}>
+						Dashboard
+					</Link>
 					<a href="#nosotros">Nosotros</a>
-					<a href="#clientes">Clientes</a>
 					<a href="#contacto">Contacto</a>
-					<Button
-						className="navbar__button"
-						size="sm"
-						variant="primary"
-						onClick={onLoginClick}
-					>
-						Iniciar Sesión
-					</Button>
+					{isAuthenticated ? (
+						<div className="navbar__user">
+							<span className="navbar__user-icon" aria-hidden="true">
+								<FiUser />
+							</span>
+							<span className="navbar__user-name">{displayName}</span>
+							<Button
+								className="navbar__button"
+								size="sm"
+								variant="secondary"
+								onClick={logout}
+							>
+								Cerrar Sesión
+							</Button>
+						</div>
+					) : (
+						<Button
+							className="navbar__button"
+							size="sm"
+							variant="primary"
+							onClick={openLogin}
+						>
+							Iniciar Sesión
+						</Button>
+					)}
 				</nav>
 			</div>
 		</header>
