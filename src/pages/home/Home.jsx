@@ -1,10 +1,8 @@
-import Navbar from '../../components/Navbar';
 import './Home.css';
 
 function Home() {
 	return (
 		<main className="home" id="home">
-			<Navbar />
 			<section className="home__hero">
 				<div className="home__hero-inner">
 					<h1 className="home__title">

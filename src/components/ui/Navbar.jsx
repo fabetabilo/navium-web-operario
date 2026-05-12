@@ -1,5 +1,5 @@
 import { Button } from 'navium-ui-lib';
-import logo from '../assets/navium-v1.png';
+import logo from '../../assets/navium-v1.png';
 import './Navbar.css';
 
 function Navbar() {
@@ -14,7 +14,7 @@ function Navbar() {
 					<a href="#nosotros">Nosotros</a>
 					<a href="#clientes">Clientes</a>
 					<a href="#contacto">Contacto</a>
-					<Button className="navbar__button" variant="primary">Iniciar Sesión</Button>
+					<Button className="navbar__button" size="sm" variant="primary">Iniciar Sesión</Button>
 				</nav>
 			</div>
 		</header>
