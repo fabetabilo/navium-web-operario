@@ -22,3 +22,7 @@
 	font-size: var(--font-size-sm);
 	color: var(--font-color-primary);
 }
+
+.dashboard__content {
+	margin-top: 28px;
+}

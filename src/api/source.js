@@ -65,3 +65,11 @@ export const login = async ({ email, password }) => {
 	const response = await api.post('/api/v0/auth/login', { email, password });
 	return response.data;
 };
+
+export const fetchMapaAndenes = async () => {
+	const response = await api.get('/api/v0/operacion/andenes');
+	if (response.status === 204 || !response.data) {
+		return [];
+	}
+	return Array.isArray(response.data) ? response.data : [];
+};

@@ -1,4 +1,5 @@
 import './Dashboard.css';
+import AndenesMap from '../../components/dashboard/AndenesMap';
 
 function Dashboard() {
 	return (
@@ -8,6 +9,9 @@ function Dashboard() {
 				<p className="dashboard__subtitle">
 					Acceso habilitado. Aqui iran las operaciones del operario.
 				</p>
+				<div className="dashboard__content">
+					<AndenesMap />
+				</div>
 			</div>
 		</main>
 	);
