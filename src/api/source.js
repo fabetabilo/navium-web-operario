@@ -73,3 +73,14 @@ export const fetchMapaAndenes = async () => {
 	}
 	return Array.isArray(response.data) ? response.data : [];
 };
+
+export const fetchAndenAsignacion = async (idAnden) => {
+	if (!idAnden) {
+		return null;
+	}
+	const response = await api.get(`/api/v0/operacion/andenes/${idAnden}/info`);
+	if (response.status === 204 || !response.data) {
+		return null;
+	}
+	return response.data;
+};

@@ -1,7 +1,14 @@
+import { useState } from 'react';
 import './Dashboard.css';
 import AndenesMap from '../../components/dashboard/AndenesMap';
+import AndenInfo from '../../components/dashboard/AndenInfo';
 
 function Dashboard() {
+	const [selectedAnden, setSelectedAnden] = useState(null);
+
+	const handleCloseInfo = () => setSelectedAnden(null);
+	const handleSelectAnden = (anden) => setSelectedAnden(anden);
+
 	return (
 		<main className="dashboard">
 			<div className="dashboard__inner">
@@ -10,9 +17,12 @@ function Dashboard() {
 					Acceso habilitado. Aqui iran las operaciones del operario.
 				</p>
 				<div className="dashboard__content">
-					<AndenesMap />
+					<AndenesMap onSelect={handleSelectAnden} />
 				</div>
 			</div>
+			{selectedAnden ? (
+				<AndenInfo anden={selectedAnden} onClose={handleCloseInfo} />
+			) : null}
 		</main>
 	);
 }
