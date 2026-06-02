@@ -84,3 +84,14 @@ export const fetchAndenAsignacion = async (idAnden) => {
 	}
 	return response.data;
 };
+
+export const fetchAgendamientosPorPatente = async (patente) => {
+	if (!patente) {
+		return [];
+	}
+	const response = await api.get(`/api/v0/operacion/agendamientos/patente/${patente}`);
+	if (response.status === 204 || !response.data) {
+		return [];
+	}
+	return Array.isArray(response.data) ? response.data : [];
+};

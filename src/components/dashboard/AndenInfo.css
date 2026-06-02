@@ -12,7 +12,7 @@
 
 .anden-info {
 	width: min(800px, 100%);
-	height: min(640px, 100%);
+	height: min(700px, 100%);
 	background: var(--color-bg);
 	color: var(--font-color-primary);
 	border-radius: var(--border-radius-xl);
