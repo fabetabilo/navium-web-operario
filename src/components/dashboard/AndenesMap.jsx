@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { fetchMapaAndenes } from '../../api/source';
+import { fetchMapaAndenes } from '../../services/bffService';
 import AndenCard from './AndenCard';
 import './AndenesMap.css';
 

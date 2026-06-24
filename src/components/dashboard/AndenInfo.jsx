@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { Button } from 'navium-ui-lib';
-import { fetchAndenAsignacion } from '../../api/source';
+import { fetchAndenAsignacion } from '../../services/bffService';
 import './AndenInfo.css';
 
 const formatValue = (value) => (value === null || value === undefined || value === '' ? '—' : value);
