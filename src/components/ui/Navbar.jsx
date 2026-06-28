@@ -6,15 +6,8 @@ import { useAuth } from '../../context/AuthContext';
 import './Navbar.css';
 
 function Navbar() {
-	const { isAuthenticated, openLogin, logout, userEmail } = useAuth();
+	const { isAuthenticated, logout, userEmail } = useAuth();
 	const displayName = userEmail ? userEmail.split('@')[0] : '';
-
-	const handleDashboardClick = (event) => {
-		if (!isAuthenticated) {
-			event.preventDefault();
-			openLogin();
-		}
-	};
 
 	return (
 		<header className="navbar">
@@ -23,12 +16,12 @@ function Navbar() {
 					<img src={logo} alt="Navium" />
 				</Link>
 				<nav className="navbar__links" aria-label="Primary">
-					<Link to="/dashboard" onClick={handleDashboardClick}>
+					<Link to="/dashboard">
 						Dashboard
 					</Link>
 					<a href="#nosotros">Nosotros</a>
 					<a href="#contacto">Contacto</a>
-					{isAuthenticated ? (
+					{isAuthenticated && (
 						<div className="navbar__user">
 							<span className="navbar__user-icon" aria-hidden="true">
 								<FiUser />
@@ -43,15 +36,6 @@ function Navbar() {
 								Cerrar Sesión
 							</Button>
 						</div>
-					) : (
-						<Button
-							className="navbar__button"
-							size="sm"
-							variant="primary"
-							onClick={openLogin}
-						>
-							Iniciar Sesión
-						</Button>
 					)}
 				</nav>
 			</div>

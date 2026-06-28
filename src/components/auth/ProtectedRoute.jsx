@@ -1,19 +1,18 @@
 import { useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 function ProtectedRoute({ children }) {
-	const { isAuthenticated, openLogin } = useAuth();
-	const location = useLocation();
+	const { isAuthenticated } = useAuth();
+	const loginUrl = import.meta.env.VITE_URL_LOGIN_CENTRAL;
 
 	useEffect(() => {
 		if (!isAuthenticated) {
-			openLogin();
+			window.location.href = loginUrl;
 		}
-	}, [isAuthenticated, location.pathname, openLogin]);
+	}, [isAuthenticated, loginUrl]);
 
 	if (!isAuthenticated) {
-		return <Navigate to="/" replace />;
+		return null;
 	}
 
 	return children;

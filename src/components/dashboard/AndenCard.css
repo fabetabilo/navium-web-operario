@@ -1,0 +1,60 @@
+.anden-card {
+	border: 1px solid rgba(255, 13, 13, 0.08);
+	border-radius: 4px;
+	min-width: 112px;
+	height: 72px;
+	padding: 10px 12px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 6px;
+	text-align: left;
+	box-shadow: 0 6px 12px -10px rgba(0, 0, 0, 0.2);
+	font-family: var(--font-family-sans);
+	color: var(--color-font-primary);
+	background: #f2f3f5;
+}
+
+.anden-card--disponible {
+	background: #f2f3f5;
+}
+
+.anden-card--ocupado {
+	background: var(--color-warning);
+}
+
+.anden-card--mantenimiento {
+	background: #cdcecf;
+}
+
+.anden-card--desconocido {
+	background: var(--color-error);
+}
+
+.anden-card--clickable {
+	cursor: pointer;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.anden-card--clickable:hover {
+	box-shadow: 0 10px 16px -12px rgba(0, 0, 0, 0.3);
+}
+
+.anden-card--clickable:focus-visible {
+	outline: 2px solid rgba(0, 0, 0, 0.35);
+	outline-offset: 2px;
+}
+
+.anden-card__code {
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+.anden-card__status {
+	font-size: 0.72rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: rgba(0, 0, 0, 0.6);
+}
+

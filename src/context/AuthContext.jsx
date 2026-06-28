@@ -1,95 +1,66 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import {
-	AUTH_LOGOUT_EVENT,
-	clearEmail,
-	clearToken,
-	getEmail,
-	getToken,
-	setEmail,
-	setToken,
-} from '../api/source';
+import { fetchCurrentUser, logout as logoutService } from '../services/bffService';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-	const [token, setTokenState] = useState(() => getToken());
-	const [userEmail, setUserEmailState] = useState(() => getEmail());
-	const [isLoginOpen, setIsLoginOpen] = useState(false);
-
-	const isAuthenticated = Boolean(token);
-
-	const openLogin = useCallback(() => {
-		setIsLoginOpen(true);
-	}, []);
-
-	const closeLogin = useCallback(() => {
-		setIsLoginOpen(false);
-	}, []);
-
-	const login = useCallback((newToken, newEmail) => {
-		if (!newToken) {
-			return;
-		}
-		setToken(newToken);
-		setTokenState(newToken);
-		if (newEmail) {
-			setEmail(newEmail);
-			setUserEmailState(newEmail);
-		}
-	}, []);
-
-	const logout = useCallback(() => {
-		clearToken();
-		clearEmail();
-		setTokenState('');
-		setUserEmailState('');
-	}, []);
+	const [userEmail, setUserEmailState] = useState('');
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		const handleLogout = () => {
-			logout();
-		};
+		const initAuth = async () => {
+			// -------------------------------------------- [LOGIN REAL vs MOCK]
+			// cuando VITE_BYPASS_AUTH es 'true', saltamos la peticion al backend de AWS 
+			// para desarrollo
 
-		window.addEventListener(AUTH_LOGOUT_EVENT, handleLogout);
-		return () => {
-			window.removeEventListener(AUTH_LOGOUT_EVENT, handleLogout);
-		};
-	}, [logout]);
-
-	useEffect(() => {
-		const handleStorage = (event) => {
-			if (event.key === 'navium_auth_token') {
-				const nextToken = event.newValue || '';
-				setTokenState(nextToken);
-				if (!nextToken) {
-					setUserEmailState('');
-				}
+			// una vez no se ocupe, se debe eliminar este bloque
+			if (import.meta.env.VITE_BYPASS_AUTH === 'true') {
+				console.warn('bypass de autenticacion activo con usuario mock local');
+				setUserEmailState('dev@local.com');
+				setIsAuthenticated(true);
+				setIsLoading(false);
 				return;
 			}
-			if (event.key === 'navium_auth_email') {
-				setUserEmailState(event.newValue || '');
+
+			try {
+				const user = await fetchCurrentUser();
+				setUserEmailState(user.email);
+				setIsAuthenticated(true);
+			} catch (error) {
+				setUserEmailState('');
+				setIsAuthenticated(false);
+			} finally {
+				setIsLoading(false);
 			}
 		};
+		initAuth();
+	}, []);
 
-		window.addEventListener('storage', handleStorage);
-		return () => {
-			window.removeEventListener('storage', handleStorage);
-		};
+	const logout = useCallback(async () => {
+		try {
+			await logoutService();
+		} catch (e) {
+			console.error('Logout error', e);
+		} finally {
+			setIsAuthenticated(false);
+			setUserEmailState('');
+			window.location.href = import.meta.env.VITE_URL_LOGIN_CENTRAL;
+		}
 	}, []);
 
 	const value = useMemo(
 		() => ({
-			token,
 			userEmail,
 			isAuthenticated,
-			isLoginOpen,
-			openLogin,
-			closeLogin,
-			login,
 			logout,
 		}),
-		[token, userEmail, isAuthenticated, isLoginOpen, openLogin, closeLogin, login, logout],
+		[userEmail, isAuthenticated, logout],
 	);
+
+	if (isLoading) {
+		return null; // o spinner
+	}
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
