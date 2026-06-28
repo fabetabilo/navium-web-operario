@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FiX } from 'react-icons/fi';
-import { Button } from 'navium-ui-lib';
-import { fetchAndenAsignacion } from '../../services/bffService';
+import { Button, FormGroup } from 'navium-ui-lib';
+import { fetchAndenAsignacion, asignarAnden } from '../../services/bffService';
 import './AndenInfo.css';
 
 const formatValue = (value) => (value === null || value === undefined || value === '' ? '—' : value);
@@ -23,6 +23,14 @@ function AndenInfo({ anden, onClose }) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
 
+	// Assignment form state
+	const [showAssignForm, setShowAssignForm] = useState(false);
+	const [assignPatente, setAssignPatente] = useState('');
+	const [assignContenedor, setAssignContenedor] = useState('');
+	const [assigning, setAssigning] = useState(false);
+	const [assignError, setAssignError] = useState('');
+	const [assignSuccess, setAssignSuccess] = useState(false);
+
 	const idAnden = anden?.idAnden;
 	const codigoAnden = anden?.codigoAnden;
 
@@ -31,6 +39,9 @@ function AndenInfo({ anden, onClose }) {
 		setLoading(true);
 		setError('');
 		setInfo(null);
+		setShowAssignForm(false);
+		setAssignSuccess(false);
+		setAssignError('');
 
 		const loadInfo = async () => {
 			try {
@@ -55,6 +66,12 @@ function AndenInfo({ anden, onClose }) {
 		};
 	}, [idAnden]);
 
+	const isDisponible = useMemo(() => {
+		if (!info) return false;
+		const estado = (info.estado || '').toUpperCase();
+		return estado === 'DISPONIBLE';
+	}, [info]);
+
 	const detailItems = useMemo(() => {
 		if (!info) {
 			return [];
@@ -70,6 +87,36 @@ function AndenInfo({ anden, onClose }) {
 			{ label: 'Fin', value: formatDate(info.horaFin) },
 		];
 	}, [info, codigoAnden]);
+
+	const handleAssign = async () => {
+		const patenteVal = assignPatente.trim();
+		const contenedorVal = assignContenedor.trim();
+		if (!patenteVal) return;
+
+		setAssigning(true);
+		setAssignError('');
+		setAssignSuccess(false);
+
+		try {
+			await asignarAnden({
+				idAnden,
+				codigoAnden,
+				patenteTransporte: patenteVal,
+				idContenedor: contenedorVal ? Number(contenedorVal) : null,
+			});
+			setAssignSuccess(true);
+			setShowAssignForm(false);
+			setAssignPatente('');
+			setAssignContenedor('');
+			// Reload info to reflect the new assignment
+			const data = await fetchAndenAsignacion(idAnden);
+			setInfo(data);
+		} catch (err) {
+			setAssignError('Error al asignar andén. Intente nuevamente.');
+		} finally {
+			setAssigning(false);
+		}
+	};
 
 	return (
 		<div className="anden-info-overlay" role="presentation" onClick={onClose}>
@@ -110,6 +157,80 @@ function AndenInfo({ anden, onClose }) {
 								))}
 							</div>
 						) : null}
+
+						{assignSuccess ? (
+							<p className="anden-info__success" role="status">
+								Andén asignado correctamente.
+							</p>
+						) : null}
+
+						{!loading && !error && isDisponible && !showAssignForm && !assignSuccess ? (
+							<Button
+								type="button"
+								variant="primary"
+								size="sm"
+								className="anden-info__assign-btn"
+								onClick={() => setShowAssignForm(true)}
+							>
+								Asignar Andén
+							</Button>
+						) : null}
+
+						{showAssignForm ? (
+							<div className="anden-info__assign-form">
+								<h3 className="anden-info__assign-title">Asignación Manual</h3>
+								<FormGroup>
+									<label className="anden-info__form-label" htmlFor="assign-patente">
+										Patente *
+									</label>
+									<input
+										id="assign-patente"
+										className="anden-info__form-input"
+										type="text"
+										placeholder="Ej: ABCD12"
+										value={assignPatente}
+										onChange={(e) => setAssignPatente(e.target.value)}
+									/>
+								</FormGroup>
+								<FormGroup>
+									<label className="anden-info__form-label" htmlFor="assign-contenedor">
+										ID Contenedor
+									</label>
+									<input
+										id="assign-contenedor"
+										className="anden-info__form-input"
+										type="text"
+										placeholder="Ej: 456"
+										value={assignContenedor}
+										onChange={(e) => setAssignContenedor(e.target.value)}
+									/>
+								</FormGroup>
+								{assignError ? (
+									<p className="anden-info__error" role="alert">{assignError}</p>
+								) : null}
+								<div className="anden-info__assign-actions">
+									<Button
+										type="button"
+										variant="secondary"
+										size="sm"
+										onClick={() => setShowAssignForm(false)}
+										disabled={assigning}
+									>
+										Cancelar
+									</Button>
+									<Button
+										type="button"
+										variant="primary"
+										size="sm"
+										onClick={handleAssign}
+										disabled={assigning || !assignPatente.trim()}
+									>
+										{assigning ? 'Asignando...' : 'Confirmar'}
+									</Button>
+								</div>
+							</div>
+						) : null}
+
 						<Button type="button" variant="primary" size="sm" className="anden-info__accept" onClick={onClose}>
 							Aceptar
 						</Button>

@@ -1,55 +1,134 @@
 .agendamientos {
-	width: 100%;
+	text-align: left;
 }
 
 .agendamientos__header {
-	margin-bottom: 2rem;
+	margin-bottom: 20px;
 }
 
 .agendamientos__title {
-	font-size: 1.75rem;
-	font-weight: 600;
-	color: #1a1a2e;
-	margin: 0 0 0.5rem 0;
+	margin: 0 0 4px;
+	font-size: var(--font-size-h2, 1.5rem);
 }
 
 .agendamientos__subtitle {
-	font-size: 1rem;
-	color: #6b7280;
-	margin: 0;
+	font-size: var(--font-size-xs, 0.75rem);
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.agendamientos__search {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.agendamientos__search-input {
+	width: 220px;
 }
 
 .agendamientos__state {
+	padding: 12px 14px;
+	border-radius: 10px;
+	background: rgba(0, 0, 0, 0.03);
+	font-size: var(--font-size-sm, 0.875rem);
+	color: rgba(0, 0, 0, 0.55);
 	text-align: center;
-	padding: 2rem;
-	color: #6b7280;
-	font-size: 1rem;
 }
 
 .agendamientos__state--error {
-	color: #e94560;
+	background: rgba(255, 87, 87, 0.1);
+	color: var(--color-danger, #d64545);
 }
 
 .agendamientos__placeholder {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding: 4rem 2rem;
-	background-color: #f8f9fa;
-	border-radius: 0.5rem;
-	border: 2px dashed #d1d5db;
+	padding: 40px 0;
+	text-align: center;
 }
 
 .agendamientos__placeholder-text {
-	font-size: 1.25rem;
-	font-weight: 500;
-	color: #1a1a2e;
-	margin: 0 0 0.5rem 0;
+	font-size: var(--font-size-sm, 0.875rem);
+	color: rgba(0, 0, 0, 0.45);
 }
 
-.agendamientos__placeholder-subtext {
-	font-size: 1rem;
-	color: #6b7280;
-	margin: 0;
+/* ---- Table ---- */
+
+.agendamientos__table-wrapper {
+	overflow-x: auto;
+	border-radius: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.agendamientos__table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: var(--font-size-sm, 0.875rem);
+}
+
+.agendamientos__table thead {
+	background: rgba(0, 0, 0, 0.04);
+}
+
+.agendamientos__table th {
+	padding: 10px 14px;
+	text-align: left;
+	font-size: var(--font-size-xs, 0.75rem);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: rgba(0, 0, 0, 0.55);
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.agendamientos__table td {
+	padding: 10px 14px;
+	border-top: 1px solid rgba(0, 0, 0, 0.06);
+	white-space: nowrap;
+}
+
+.agendamientos__row {
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.agendamientos__row:hover {
+	background: rgba(0, 0, 0, 0.03);
+}
+
+/* ---- Status badges ---- */
+
+.agendamientos__badge {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 14px;
+	font-size: var(--font-size-xs, 0.75rem);
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	background: rgba(0, 0, 0, 0.08);
+}
+
+.agendamientos__badge--confirmado {
+	background: rgba(34, 197, 94, 0.15);
+	color: #16a34a;
+}
+
+.agendamientos__badge--pendiente {
+	background: rgba(234, 179, 8, 0.15);
+	color: #b45309;
+}
+
+.agendamientos__badge--cancelado {
+	background: rgba(239, 68, 68, 0.12);
+	color: #dc2626;
+}
+
+.agendamientos__badge--en-curso {
+	background: rgba(59, 130, 246, 0.15);
+	color: #2563eb;
+}
+
+.agendamientos__badge--completado {
+	background: rgba(107, 114, 128, 0.15);
+	color: #4b5563;
 }

@@ -3,7 +3,6 @@ import './Dashboard.css';
 import AndenesMap from '../../components/dashboard/AndenesMap';
 import Agendamientos from '../../components/dashboard/Agendamientos';
 import Sidebar from '../../components/dashboard/Sidebar';
-import ConsultaRapida from '../../components/dashboard/ConsultaRapida';
 import AndenInfo from '../../components/dashboard/AndenInfo';
 
 function Dashboard() {
@@ -35,7 +34,7 @@ function Dashboard() {
 						<p className="dashboard__subtitle">
 						</p>
 					</div>
-					<ConsultaRapida />
+
 				</div>
 				<div className="dashboard__content">{renderContent()}</div>
 			</div>

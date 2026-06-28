@@ -69,3 +69,54 @@ export const fetchAgendamientosPorPatente = async (patente) => {
         throw error;
     }
 }
+
+export const fetchAndenesConInfo = async () => {
+    try {
+        const response = await fetch(`${DASHBOARD_BASE_URL}/operacion/andenes/info`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        verificarRespuesta(response);
+        if (response.status === 204) return [];
+        return await response.json();
+    } catch (error) {
+        console.error('Error al obtener andenes con asignacion');
+        throw error;
+    }
+};
+
+export const asignarAnden = async (request) => {
+    try {
+        const response = await fetch(`${DASHBOARD_BASE_URL}/operacion/andenes/asignar`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(request),
+        });
+        verificarRespuesta(response);
+        return response;
+    } catch (error) {
+        console.error('Error al asignar anden');
+        throw error;
+    }
+};
+
+export const consultarAgendamiento = async ({ patente, id, momento } = {}) => {
+    try {
+        const params = new URLSearchParams();
+        if (patente) params.append('patente', patente);
+        if (id) params.append('id', id);
+        if (momento) params.append('momento', momento);
+
+        const response = await fetch(`${DASHBOARD_BASE_URL}/operacion/agendamientos/consulta?${params.toString()}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        verificarRespuesta(response);
+        if (response.status === 204) return null;
+        return await response.json();
+    } catch (error) {
+        console.error('Error al consultar agendamiento');
+        throw error;
+    }
+};
