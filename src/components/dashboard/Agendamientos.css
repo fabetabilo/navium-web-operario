@@ -8,7 +8,8 @@
 
 .agendamientos__title {
 	margin: 0 0 4px;
-	font-size: var(--font-size-h2, 1.5rem);
+	font-size: var(--font-size-h3);
+	color: var(--font-color-primary);
 }
 
 .agendamientos__subtitle {
@@ -131,4 +132,9 @@
 .agendamientos__badge--completado {
 	background: rgba(107, 114, 128, 0.15);
 	color: #4b5563;
+}
+
+.agendamientos__badge--creado {
+	background: rgba(139, 92, 246, 0.15);
+	color: #7c3aed;
 }

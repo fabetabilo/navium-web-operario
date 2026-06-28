@@ -23,6 +23,7 @@ const ESTADO_CLASSES = {
 	CANCELADO: 'agendamiento-info__estado--cancelado',
 	EN_CURSO: 'agendamiento-info__estado--en-curso',
 	COMPLETADO: 'agendamiento-info__estado--completado',
+	CREADO: 'agendamiento-info__estado--creado',
 };
 
 function AgendamientoInfo({ agendamiento, onClose }) {
@@ -36,6 +37,10 @@ function AgendamientoInfo({ agendamiento, onClose }) {
 			{ label: 'RUT Chofer', value: formatValue(agendamiento.rutChofer) },
 			{ label: 'Operación', value: formatValue(agendamiento.tipoOperacion) },
 			{ label: 'Contenedor', value: formatValue(agendamiento.idContenedor) },
+			{ label: 'Sigla Contenedor', value: formatValue(agendamiento.codigoSigla) },
+			{ label: 'Estado TATC', value: formatValue(agendamiento.estadoTATC) },
+			{ label: 'Estado General', value: formatValue(agendamiento.estadoGeneral) },
+			{ label: 'Empresa Transporte', value: formatValue(agendamiento.rutEmpresaTransporte) },
 			{ label: 'Inicio', value: formatDate(agendamiento.bloqueInicio) },
 			{ label: 'Fin', value: formatDate(agendamiento.bloqueFin) },
 		];
@@ -63,7 +68,7 @@ function AgendamientoInfo({ agendamiento, onClose }) {
 				<div className="agendamiento-info__content">
 					<div className="agendamiento-info__panel">
 						<h2 id="agendamiento-info-title" className="agendamiento-info__title">
-							Agendamiento #{agendamiento.id || '—'}
+							Agendamiento {agendamiento.id || '—'}
 						</h2>
 						<p className="agendamiento-info__subtitle">Detalle de agendamiento</p>
 						{agendamiento.estado ? (

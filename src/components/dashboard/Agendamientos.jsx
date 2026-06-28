@@ -19,6 +19,7 @@ const ESTADO_CLASSES = {
 	CANCELADO: 'agendamientos__badge--cancelado',
 	EN_CURSO: 'agendamientos__badge--en-curso',
 	COMPLETADO: 'agendamientos__badge--completado',
+	CREADO: 'agendamientos__badge--creado',
 };
 
 function Agendamientos() {
@@ -112,6 +113,7 @@ function Agendamientos() {
 									<th>Patente</th>
 									<th>Operación</th>
 									<th>Contenedor</th>
+									<th>Sigla</th>
 									<th>Inicio</th>
 									<th>Fin</th>
 									<th>Estado</th>
@@ -131,6 +133,7 @@ function Agendamientos() {
 											<td>{ag.patenteCamion || '—'}</td>
 											<td>{ag.tipoOperacion || '—'}</td>
 											<td>{ag.idContenedor || '—'}</td>
+											<td>{ag.codigoSigla || '—'}</td>
 											<td>{formatDate(ag.bloqueInicio)}</td>
 											<td>{formatDate(ag.bloqueFin)}</td>
 											<td>
