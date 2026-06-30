@@ -1,4 +1,5 @@
 const DASHBOARD_BASE_URL = import.meta.env.VITE_API_DASHBOARD;
+const AUTH_BASE_URL = import.meta.env.VITE_API_AUTH;
 
 const verificarRespuesta = (res) => {
     if (res.status === 401) {
@@ -10,14 +11,14 @@ const verificarRespuesta = (res) => {
 };
 
 export const logout = async () => {
-    await fetch('/api/auth/logout', {
+    await fetch(`${AUTH_BASE_URL}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include'
     });
 };
 
 export const fetchCurrentUser = async () => {
-    const res = await fetch('/api/auth/me', {
+    const res = await fetch(`${AUTH_BASE_URL}/api/auth/me`, {
         method: 'GET',
         credentials: 'include'
     });
